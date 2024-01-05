@@ -1,16 +1,18 @@
----
-volumes:
-  portainer-data:
-    driver: local
+version: '3.9'
+
 services:
-  app:
-    container_name: portainer
-    image: portainer/portainer-ce:latest
-    ports:
-      - 9000:9000
-      - 9443:9443
-      - 8000:8000
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer-data:/data
-    restart: unless-stopped
+    portainer-ce:
+        container_name: portainer
+        image: portainer/portainer-ce:latest
+        volumes:
+            - portainer_data:/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 9000:9000
+            - 9443:9443
+            - 8000:8000
+        restart: unless-stopped
+
+volumes:
+    portainer_data:
+        external: true # converted from docker run to compose with already created volume
